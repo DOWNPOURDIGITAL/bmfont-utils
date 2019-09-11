@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist/",
+		"sourceMap": true,
+		"declaration": true,
+		"declarationDir": "./dist/",
+		"noImplicitAny": true,
+		"module": "es6",
+		"moduleResolution": "node",
+		"target": "es6",
+		"jsx": "react",
+		"esModuleInterop": false,
+		"removeComments": true,
+		"lib": [
+			"es2015",
+			"dom",
+			"webworker",
+		],
+		"plugins": []
+	},
+	"include": [
+		"./src/**/*",
+	]
+}

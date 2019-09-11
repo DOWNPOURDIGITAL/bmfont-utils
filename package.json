@@ -1,0 +1,29 @@
+{
+    "name": "@downpourdigital/boxes-text",
+    "version": "0.0.0",
+    "description": "BMFont utilities for boxes",
+    "main": "dist/index.js",
+    "repository": "https://github.com/johh/boxes-text.git",
+    "author": "johh <code@johh.net>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "build": "rollup -c",
+        "declaration": "tsc --emitDeclarationOnly",
+        "type-check": "tsc --noEmit",
+        "dev": "rollup -c -w"
+    },
+    "devDependencies": {
+        "@types/gl-matrix": "^2.4.5",
+        "rollup": "^1.17.0",
+        "rollup-plugin-typescript2": "^0.24.0",
+        "tslib": "^1.10.0",
+        "tslint": "^5.20.0",
+        "tslint-config-airbnb": "^5.11.1",
+        "tslint-react": "^4.0.0",
+        "typescript": "^3.6.3"
+    },
+    "dependencies": {
+        "@downpourdigital/boxes": ">0.0.2"
+    }
+}
