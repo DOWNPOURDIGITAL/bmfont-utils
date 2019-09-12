@@ -24,7 +24,7 @@ interface LayoutProps {
 	lineHeight?: number;
 	noWrap?: boolean;
 	tabWidth?: number;
-	align?: 'left' | 'right' | 'justify';
+	align?: 'left' | 'right' | 'center' | 'justify';
 }
 
 export default class LayoutGenerator {
@@ -98,11 +98,17 @@ export default class LayoutGenerator {
 		let pointer = 0;
 
 		lines.forEach( ( text, lineNo ) => {
-			const lineWidth = this.wrapper.mesure( text );
+			const emptySpace = width - this.wrapper.mesure( text );
 			const spaces = text.match( /\u0020|\u00A0/gm );
-			const spaceFill = ( width - lineWidth ) / ( spaces ? spaces.length : 1 );
+			const spaceFill = emptySpace / ( spaces ? spaces.length : 1 );
 			let previousChar: Char;
-			let xPos = align === 'right' ? width - lineWidth : 0;
+			let xPos = 0;
+
+			if ( align === 'right' ) {
+				xPos = emptySpace;
+			} else if ( align === 'center' ) {
+				xPos = emptySpace / 2;
+			}
 
 			text.split( '' ).forEach( ( s ) => {
 				const code = s.charCodeAt( 0 );
