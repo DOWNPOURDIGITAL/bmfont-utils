@@ -20,8 +20,8 @@ const defaultBreakPoints: BreakPoint[] = [
 ];
 
 type BreakPoint = {
-	char: number,
-	replace: string,
+	char: number;
+	replace: string;
 };
 
 interface WordWrapperProps {
@@ -65,7 +65,9 @@ export default class WordWrapper {
 			amount: k.amount / font.info.size,
 		}) );
 
-		breakPoints.forEach( breakpoint => this.breakCache.push( breakpoint.char ) );
+		breakPoints.forEach( ( breakpoint ) => {
+			this.breakCache.push( breakpoint.char );
+		});
 	}
 
 
@@ -104,7 +106,10 @@ export default class WordWrapper {
 
 				const line = str.substr( 0, currentPosition ) + br;
 
-				return [line, str.substr( currentPosition + 1 )];
+				// check if the remaining line, including break, fits into width
+				if ( this.mesure( line ) <= width ) {
+					return [line, str.substr( currentPosition + 1 )];
+				}
 			}
 			currentPosition -= 1;
 		}
