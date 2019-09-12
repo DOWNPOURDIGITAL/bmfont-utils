@@ -24,6 +24,7 @@ interface LayoutProps {
 	lineHeight?: number;
 	noWrap?: boolean;
 	tabWidth?: number;
+	xShift?: number;
 	align?: 'left' | 'right' | 'center' | 'justify';
 }
 
@@ -33,6 +34,10 @@ export default class LayoutGenerator {
 	private kernings: kerning[] = [];
 	private baselineOffset: number;
 	private wrapper: WordWrapper;
+	public capHeight: number = 0;
+	public xHeight: number = 0;
+	public ascenderHeight: number = 0;
+	public descenderHeight: number = 0;
 
 	constructor( font: BMFont ) {
 		this.font = font;
@@ -70,6 +75,8 @@ export default class LayoutGenerator {
 		});
 
 		this.baselineOffset = this.font.common.base / this.font.info.size;
+
+		this.computeMetrics();
 	}
 
 	public layout( props: LayoutProps ) {
@@ -80,8 +87,11 @@ export default class LayoutGenerator {
 			letterSpacing = 0,
 			lineHeight = this.font.common.lineHeight / this.font.info.size,
 			tabWidth = 1,
+			xShift = -this.font.info.padding[3] / this.font.info.size,
 			align = 'left',
 		} = props;
+
+		const padTop = this.font.info.padding[0] / this.font.info.size;
 
 		const str = noWrap ? text : this.wrapper.wrap({
 			text,
@@ -130,10 +140,12 @@ export default class LayoutGenerator {
 						xPos += letterSpacing;
 					}
 
-					const x1 = xPos + char.xOffset;
-					const x2 = xPos + char.xOffset + char.width;
-					const y1 = -( lineNo * lineHeight ) - char.yOffset + this.baselineOffset;
-					const y2 = -( lineNo * lineHeight ) - char.yOffset - char.height + this.baselineOffset;
+					const x1 = xPos + char.xOffset + xShift;
+					const x2 = xPos + char.xOffset + char.width + xShift;
+					const y1 = -( lineNo * lineHeight ) - char.yOffset
+						+ this.baselineOffset + padTop;
+					const y2 = -( lineNo * lineHeight ) - char.yOffset
+						- char.height + this.baselineOffset + padTop;
 
 
 					verts.push(
@@ -197,5 +209,42 @@ export default class LayoutGenerator {
 		});
 
 		return geometry;
+	}
+
+
+	private computeMetrics() {
+		const caps = 'HXNTKM'.split( '' );
+		const lowChars = 'xvwz'.split( '' );
+
+		const padTop = this.font.info.padding[0] / this.font.info.size;
+		const padBottom = this.font.info.padding[2] / this.font.info.size;
+
+
+		const getMaxHeight = ( chars: string[], ascender = true ) => {
+			let maxHeight = 0;
+			chars.forEach( ( s ) => {
+				const code = s.charCodeAt( 0 );
+				const char = this.chars[code];
+
+				if ( char ) {
+					const totalHeight = char.height + char.yOffset;
+					const desc = totalHeight - this.baselineOffset;
+					const asc = char.height - desc;
+
+					maxHeight = Math.max(
+						maxHeight,
+						ascender ? asc : desc - padBottom - padTop,
+					);
+				}
+			});
+
+			return maxHeight;
+		};
+
+
+		this.capHeight = getMaxHeight( caps );
+		this.xHeight = getMaxHeight( lowChars );
+		this.ascenderHeight = getMaxHeight( this.font.info.charset );
+		this.descenderHeight = getMaxHeight( this.font.info.charset, false );
 	}
 }
