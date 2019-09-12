@@ -83,25 +83,13 @@ export default class WordWrapper {
 				// end of string reached, no break needed.
 				return [str, ''];
 			}
+
 			if ( char === 10 ) {
 				// new line character
 				return [str.substr( 0, currentPosition + 1 ), str.substr( currentPosition + 1 )];
 			}
 
-			let charWidth = this.charCache[char] || 0;
-
-			if ( char === 9 ) {
-				// tab
-				charWidth = this.tabWidth;
-			}
-
-			if ( this.useKernings && previousChar ) {
-				const kerning = this.kernings.find( k => k.first === previousChar && k.second === char );
-
-				if ( kerning ) charWidth += kerning.amount;
-			}
-
-			currentLineWidth += charWidth + this.letterSpacing;
+			currentLineWidth += this.getCharWidth( char, previousChar );
 			currentPosition += 1;
 			previousChar = char;
 		}
@@ -126,7 +114,25 @@ export default class WordWrapper {
 	}
 
 
-	wrap( props: WrapProps ) {
+	private getCharWidth( char: number, previousChar?: number ) {
+		let charWidth = this.charCache[char] || 0;
+
+		if ( char === 9 ) {
+			// tab
+			charWidth = this.tabWidth;
+		}
+
+		if ( this.useKernings && previousChar ) {
+			const kerning = this.kernings.find( k => k.first === previousChar && k.second === char );
+
+			if ( kerning ) charWidth += kerning.amount;
+		}
+
+		return charWidth + this.letterSpacing;
+	}
+
+
+	public wrap( props: WrapProps ) {
 		const {
 			text: str,
 			width = 10,
@@ -149,5 +155,19 @@ export default class WordWrapper {
 		}
 
 		return out.join( '' );
+	}
+
+
+	public mesure( text: string ) {
+		let width = 0;
+		let previousChar: number;
+
+		text.split( '' ).forEach( ( s ) => {
+			const char = s.charCodeAt( 0 );
+			width += this.getCharWidth( char, previousChar );
+			previousChar = char;
+		});
+
+		return width;
 	}
 }
