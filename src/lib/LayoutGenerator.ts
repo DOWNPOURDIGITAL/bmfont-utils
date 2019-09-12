@@ -26,6 +26,10 @@ interface LayoutProps {
 	tabWidth?: number;
 	xShift?: number;
 	align?: 'left' | 'right' | 'center' | 'justify';
+	computeLineY?: boolean;
+	computeCharUvs?: boolean;
+	computeCharIndex?: boolean;
+	computeLineIndex?: boolean;
 }
 
 export default class LayoutGenerator {
@@ -89,6 +93,10 @@ export default class LayoutGenerator {
 			tabWidth = 1,
 			xShift = -this.font.info.padding[3] / this.font.info.size,
 			align = 'left',
+			computeLineY = false,
+			computeCharUvs = false,
+			computeCharIndex = false,
+			computeLineIndex = false,
 		} = props;
 
 		const padTop = this.font.info.padding[0] / this.font.info.size;
@@ -105,7 +113,12 @@ export default class LayoutGenerator {
 		const verts: number[] = [];
 		const uvs: number[] = [];
 		const indices: number[] = [];
+		const lineY: number[] = [];
+		const charUvs: number[] = [];
+		const charIndices: number[] = [];
+		const lineIndices: number[] = [];
 		let pointer = 0;
+		let charIndex = 0;
 
 		lines.forEach( ( text, lineNo ) => {
 			const emptySpace = width - this.wrapper.mesure( text );
@@ -140,12 +153,45 @@ export default class LayoutGenerator {
 						xPos += letterSpacing;
 					}
 
+					const y1Relative = char.yOffset
+						- this.baselineOffset - padTop;
+
+					const y2Relative = char.yOffset
+						+ char.height - this.baselineOffset - padTop;
+
+					if ( computeLineY ) {
+						const h1 = this.ascenderHeight + y1Relative;
+						const h2 = this.ascenderHeight + y2Relative;
+
+						lineY.push(
+							h1,
+							h1,
+							h2,
+							h2,
+						);
+					}
+
+					if ( computeCharUvs ) {
+						charUvs.push(
+							0, 1,
+							1, 1,
+							0, 0,
+							1, 0,
+						);
+					}
+
+					if ( computeCharIndex ) {
+						charIndices.push( charIndex, charIndex, charIndex, charIndex );
+					}
+
+					if ( computeLineIndex ) {
+						lineIndices.push( lineNo, lineNo, lineNo, lineNo );
+					}
+
 					const x1 = xPos + char.xOffset + xShift;
 					const x2 = xPos + char.xOffset + char.width + xShift;
-					const y1 = -( lineNo * lineHeight ) - char.yOffset
-						+ this.baselineOffset + padTop;
-					const y2 = -( lineNo * lineHeight ) - char.yOffset
-						- char.height + this.baselineOffset + padTop;
+					const y1 = -( lineNo * lineHeight ) - y1Relative;
+					const y2 = -( lineNo * lineHeight ) - y2Relative;
 
 
 					verts.push(
@@ -182,6 +228,7 @@ export default class LayoutGenerator {
 					);
 
 					pointer += 4;
+					charIndex += 1;
 					xPos += char.xAdvance;
 					previousChar = char;
 				}
@@ -192,6 +239,12 @@ export default class LayoutGenerator {
 			verts,
 			uvs,
 			indices,
+			lineY,
+			charUvs,
+			charIndices,
+			lineIndices,
+			charCount: charIndex + 1,
+			lineCount: lines.length,
 		};
 	}
 
