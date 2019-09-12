@@ -34,6 +34,7 @@ interface WrapProps {
 	text: string;
 	width?: number;
 	letterSpacing?: number;
+	tabWidth?: number;
 }
 
 export default class WordWrapper {
@@ -42,6 +43,7 @@ export default class WordWrapper {
 	private kernings: kerning[];
 	private breakCache: number[] = [];
 	private letterSpacing: number;
+	private tabWidth: number;
 	private useKernings: boolean;
 
 	constructor( props: WordWrapperProps ) {
@@ -88,6 +90,11 @@ export default class WordWrapper {
 
 			let charWidth = this.charCache[char] || 0;
 
+			if ( char === 9 ) {
+				// tab
+				charWidth = this.tabWidth;
+			}
+
 			if ( this.useKernings && previousChar ) {
 				const kerning = this.kernings.find( k => k.first === previousChar && k.second === char );
 
@@ -124,9 +131,11 @@ export default class WordWrapper {
 			text: str,
 			width = 10,
 			letterSpacing = 0,
+			tabWidth = 1,
 		} = props;
 
 		this.letterSpacing = letterSpacing;
+		this.tabWidth = tabWidth;
 
 		// TODO: check if  string contains unsupported chars
 

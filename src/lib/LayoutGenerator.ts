@@ -23,6 +23,7 @@ interface LayoutProps {
 	letterSpacing?: number;
 	lineHeight?: number;
 	noWrap?: boolean;
+	tabWidth?: number;
 }
 
 export default class LayoutGenerator {
@@ -77,12 +78,14 @@ export default class LayoutGenerator {
 			noWrap,
 			letterSpacing = 0,
 			lineHeight = this.font.common.lineHeight / this.font.info.size,
+			tabWidth = 1,
 		} = props;
 
 		const str = noWrap ? text : this.wrapper.wrap({
 			text,
 			width,
 			letterSpacing,
+			tabWidth,
 		});
 
 
@@ -98,8 +101,10 @@ export default class LayoutGenerator {
 
 			text.split( '' ).forEach( ( s ) => {
 				const char = this.chars[s.charCodeAt( 0 )];
-
-				if ( char ) {
+				if ( s.charCodeAt( 0 ) === 9 ) {
+					// tab
+					xPos += tabWidth;
+				} else if ( char ) {
 					if ( previousChar ) {
 						const kerning = this.kernings.find(
 							k => k.first === previousChar.id && k.second === char.id,
