@@ -2,6 +2,7 @@ import { BufferGeometry } from '@downpourdigital/boxes';
 
 import BMFont, { kerning } from '../types/BMFont';
 import WordWrapper from './WordWrapper';
+import { mapRange } from './utils';
 
 
 type Char = {
@@ -83,6 +84,7 @@ export default class LayoutGenerator {
 		this.computeMetrics();
 	}
 
+
 	public layout( props: LayoutProps ) {
 		const {
 			text,
@@ -160,8 +162,9 @@ export default class LayoutGenerator {
 						+ char.height - this.baselineOffset - padTop;
 
 					if ( computeLineY ) {
-						const h1 = this.ascenderHeight + y1Relative;
-						const h2 = this.ascenderHeight + y2Relative;
+						const h1 = mapRange( y1Relative, -this.ascenderHeight, this.descenderHeight );
+						const h2 = mapRange( y2Relative, -this.ascenderHeight, this.descenderHeight );
+
 
 						lineY.push(
 							h1,
