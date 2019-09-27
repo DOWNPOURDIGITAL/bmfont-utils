@@ -9,9 +9,13 @@ const defaultBreakPoints: BreakPoint[] = [
 		char: '\u00AD'.charCodeAt( 0 ),
 		replace: '–\n',
 	},
-	{	// hyphen
+	{	// en dash
 		char: '–'.charCodeAt( 0 ),
 		replace: '–\n',
+	},
+	{	// em dash
+		char: '—'.charCodeAt( 0 ),
+		replace: '—\n',
 	},
 	{	// hyphen minus
 		char: '-'.charCodeAt( 0 ),
