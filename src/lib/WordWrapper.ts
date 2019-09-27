@@ -1,5 +1,6 @@
 import BMFont, { kerning } from '../types/BMFont';
 
+
 const defaultBreakPoints: BreakPoint[] = [
 	{	// space
 		char: '\u0020'.charCodeAt( 0 ),
@@ -23,10 +24,12 @@ const defaultBreakPoints: BreakPoint[] = [
 	},
 ];
 
+
 type BreakPoint = {
 	char: number;
 	replace: string;
 };
+
 
 interface WordWrapperProps {
 	font: BMFont;
@@ -34,12 +37,14 @@ interface WordWrapperProps {
 	useKernings?: boolean;
 }
 
+
 interface WrapProps {
 	text: string;
 	width?: number;
 	letterSpacing?: number;
 	tabWidth?: number;
 }
+
 
 export default class WordWrapper {
 	private breakPoints: BreakPoint[];
@@ -49,6 +54,7 @@ export default class WordWrapper {
 	private letterSpacing: number;
 	private tabWidth: number;
 	private useKernings: boolean;
+
 
 	constructor( props: WordWrapperProps ) {
 		const {

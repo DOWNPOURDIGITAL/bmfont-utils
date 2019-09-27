@@ -42,6 +42,7 @@ export default class LayoutGenerator {
 	public ascenderHeight: number = 0;
 	public descenderHeight: number = 0;
 
+
 	constructor( font: BMFont ) {
 		this.font = font;
 
