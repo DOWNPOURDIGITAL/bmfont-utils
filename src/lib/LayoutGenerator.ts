@@ -1,5 +1,3 @@
-import { BufferGeometry } from '@downpourdigital/boxes';
-
 import BMFont, { kerning } from '../types/BMFont';
 import WordWrapper from './WordWrapper';
 import { mapRange } from './utils';
@@ -249,22 +247,6 @@ export default class LayoutGenerator {
 			charCount: charIndex + 1,
 			lineCount: lines.length,
 		};
-	}
-
-
-	public getGeometry( props: LayoutProps ) {
-		const data = this.layout( props );
-
-		const geometry = new BufferGeometry({
-			verts: data.verts,
-			indices: data.indices,
-			attributes: [
-				data.uvs,
-			],
-			components: 2,
-		});
-
-		return geometry;
 	}
 
 

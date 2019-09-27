@@ -24,6 +24,5 @@
         "typescript": "^3.6.3"
     },
     "dependencies": {
-        "@downpourdigital/boxes": ">0.0.2"
     }
 }
