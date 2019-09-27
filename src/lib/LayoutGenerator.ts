@@ -121,7 +121,7 @@ export default class LayoutGenerator {
 		let charIndex = 0;
 
 		lines.forEach( ( text, lineNo ) => {
-			const emptySpace = width - this.wrapper.mesure( text );
+			const emptySpace = width - this.wrapper.measure( text );
 			const spaces = text.match( /\u0020|\u00A0/gm );
 			const spaceFill = emptySpace / ( spaces ? spaces.length : 1 );
 			let previousChar: Char;

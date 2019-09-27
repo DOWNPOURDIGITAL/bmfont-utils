@@ -111,7 +111,7 @@ export default class WordWrapper {
 				const line = str.substr( 0, currentPosition ) + br;
 
 				// check if the remaining line, including break, fits into width
-				if ( this.mesure( line ) <= width ) {
+				if ( this.measure( line ) <= width ) {
 					return [line, str.substr( currentPosition + 1 )];
 				}
 			}
@@ -167,7 +167,7 @@ export default class WordWrapper {
 	}
 
 
-	public mesure( text: string ) {
+	public measure( text: string ) {
 		let width = 0;
 		let previousChar: number;
 
