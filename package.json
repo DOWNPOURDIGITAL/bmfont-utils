@@ -5,8 +5,17 @@
     "main": "dist/index.js",
     "repository": "https://github.com/DOWNPOURDIGITAL/bmfont-utils.git",
     "author": "johh <code@johh.net>",
-    "license": "MIT",
-    "private": false,
+    "license": "BSD-4-Clause",
+	"private": false,
+	"keywords": [
+		"bmfont",
+		"layout",
+		"text",
+		"render",
+		"word",
+		"wrap",
+		"wrapper"
+	],
     "scripts": {
         "build": "rollup -c",
         "declaration": "tsc --emitDeclarationOnly",
