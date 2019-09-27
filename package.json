@@ -1,21 +1,21 @@
 {
     "name": "@downpourdigital/bmfont-utils",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "description": "BMFont utilities for WebGL",
     "main": "dist/index.js",
     "repository": "https://github.com/DOWNPOURDIGITAL/bmfont-utils.git",
     "author": "johh <code@johh.net>",
     "license": "BSD-4-Clause",
-	"private": false,
-	"keywords": [
-		"bmfont",
-		"layout",
-		"text",
-		"render",
-		"word",
-		"wrap",
-		"wrapper"
-	],
+    "private": false,
+    "keywords": [
+        "bmfont",
+        "layout",
+        "text",
+        "render",
+        "word",
+        "wrap",
+        "wrapper"
+    ],
     "scripts": {
         "build": "rollup -c",
         "declaration": "tsc --emitDeclarationOnly",
@@ -32,6 +32,5 @@
         "tslint-react": "^4.0.0",
         "typescript": "^3.6.3"
     },
-    "dependencies": {
-    }
+    "dependencies": {}
 }
