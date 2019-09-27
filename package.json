@@ -1,9 +1,9 @@
 {
-    "name": "@downpourdigital/boxes-text",
+    "name": "@downpourdigital/bmfont-utils",
     "version": "0.0.0",
-    "description": "BMFont utilities for boxes",
+    "description": "BMFont utilities for WebGL",
     "main": "dist/index.js",
-    "repository": "https://github.com/johh/boxes-text.git",
+    "repository": "https://github.com/DOWNPOURDIGITAL/bmfont-utils.git",
     "author": "johh <code@johh.net>",
     "license": "MIT",
     "private": false,
