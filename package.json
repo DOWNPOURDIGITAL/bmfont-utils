@@ -1,6 +1,6 @@
 {
     "name": "@downpourdigital/bmfont-utils",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "BMFont utilities for WebGL",
     "sideEffects": false,
     "main": "dist/cjs/index.js",
