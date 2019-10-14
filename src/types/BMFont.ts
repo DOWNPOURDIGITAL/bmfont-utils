@@ -18,7 +18,7 @@ export type kerning = {
 };
 
 type BMFont =  {
-	page: string[];
+	pages: string[];
 	chars: char[];
 	info: {
 		face: string;
