@@ -1,8 +1,10 @@
 {
     "name": "@downpourdigital/bmfont-utils",
     "version": "0.0.1",
-    "description": "BMFont utilities for WebGL",
-    "main": "dist/index.js",
+	"description": "BMFont utilities for WebGL",
+	"sideEffects": false,
+	"main": "dist/cjs/index.js",
+	"module": "dist/esm/index.js",
     "repository": "https://github.com/DOWNPOURDIGITAL/bmfont-utils.git",
     "author": "johh <code@johh.net>",
     "license": "BSD-4-Clause",
